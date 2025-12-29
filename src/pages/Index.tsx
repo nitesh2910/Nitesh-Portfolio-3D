@@ -1,13 +1,43 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useEffect } from 'react';
+import useLenis from '@/hooks/useLenis';
+import Navbar from '@/components/layout/Navbar';
+import Hero from '@/components/sections/Hero';
+import About from '@/components/sections/About';
+import Experience from '@/components/sections/Experience';
+import Contact from '@/components/sections/Contact';
+import Footer from '@/components/layout/Footer';
+import ScrollProgress from '@/components/ui/ScrollProgress';
 
 const Index = () => {
+  useLenis();
+
+  useEffect(() => {
+    // Add smooth scroll behavior for anchor links
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLAnchorElement;
+      if (target.tagName === 'A' && target.hash) {
+        const element = document.querySelector(target.hash);
+        if (element) {
+          e.preventDefault();
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <main className="relative min-h-screen bg-background">
+      <ScrollProgress />
+      <Navbar />
+      <Hero />
+      <About />
+      <Experience />
+      <Contact />
+      <Footer />
+    </main>
   );
 };
 
